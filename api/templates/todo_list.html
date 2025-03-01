@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+<br>
+<div class="container center">
+    {% for task in todo %}
+
+    <div class="card">
+        <div class="card-header">
+            Task : {{ task.id }}
+        </div>
+        <div class="card-body">
+            <h5 class="card-title">{{ task.title }}</h5>
+            <p class="card-text">{{ task.description }}</p>
+            <p class="card-text">{{ task.get_status_display }}</p>
+            <a href="{% url 'detail' task.id %}" class="btn btn-primary">View Task</a>
+        </div>
+    </div>
+    <br>
+    {% endfor %}
+</div>
+
+
+{% endblock content %}

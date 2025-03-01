@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+<h2>Detail</h2>
+<div class="card" style="width: 18rem;">
+    <div class="card-body">
+      <h5 class="card-title">{{todo.title}}</h5>
+      <p class="card-text">{{todo.description}}</p>
+      <p class="card-text">Status: {{todo.get_status_display}}</p>
+    </div>
+  </div>
+   
+{% endblock content %}

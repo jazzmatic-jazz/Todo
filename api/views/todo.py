@@ -16,6 +16,9 @@ class ListTodoAPI(APIView):
     '''
         GET Request:
             - Return a list of all tasks in the todo table.
+        Templates:
+            success - todo_list.html
+            error - error.html
     '''
 
     authentication_classes = [BasicAuthentication] 
@@ -37,6 +40,9 @@ class DetailTodoApi(APIView):
     '''
         GET (PK) Request:
             - Returns a matching task in the todo table.
+        Templates:
+            success - detail_todo.html
+            error - error.html
     '''
     authentication_classes = [BasicAuthentication] 
     permission_classes = [IsAuthenticated] 
@@ -60,6 +66,9 @@ class DetailTodoApi(APIView):
 class CreateToDoAPI(APIView):
     '''
         POST: Create Task and store it in the todo table
+        Templates:
+            success - create_todo.html
+            error - error.html
         
     '''
     authentication_classes = [BasicAuthentication] 
@@ -87,10 +96,14 @@ class CreateToDoAPI(APIView):
 class UpdateDeleteToDoApi(APIView):
     '''
         Works for Updation and Deletion of Tasks
+        HTTP Verbs:
+        PUT - for updation
+        DELETE = for deletion
+
     '''
     authentication_classes = [BasicAuthentication] 
     permission_classes = [IsAuthenticated] 
-    
+
     def put(self, request, pk=None):
         try:
             todo = Todo.objects.get(id=pk)

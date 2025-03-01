@@ -7,7 +7,10 @@ from rest_framework.renderers import TemplateHTMLRenderer
 from api.serializers.todo import TodoListSerializer
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.authentication import BasicAuthentication
+import logging
 
+
+logger = logging.getLogger(__name__)
 
 class ListTodoAPI(APIView):
     '''
@@ -23,8 +26,10 @@ class ListTodoAPI(APIView):
     def get(self, request, format=None):
         try:
             todo = Todo.objects.all()
+            logger.info(f"User {request.user} accessed the task list.")
             return Response({"todo": todo}, status=status.HTTP_200_OK)
-        except:
+        except Exception as e:
+            logger.error(f"Error fetching task list: {str(e)}", exc_info=True)
             return render(request, "error.html", status=status.HTTP_404_NOT_FOUND)
 
 
@@ -44,8 +49,10 @@ class DetailTodoApi(APIView):
         '''
         try:
             todo = Todo.objects.get(id=pk)
+            logger.info(f"User {request.user} accessed task ID {pk}.")
             return Response({"todo": todo}, status=status.HTTP_200_OK)
         except Todo.DoesNotExist:
+            logger.error(f"User {request.user} tried to access a non-existent task ID {pk}.")
             return render(request, "error.html", status=status.HTTP_404_NOT_FOUND)
 
 
@@ -72,7 +79,8 @@ class CreateToDoAPI(APIView):
                 serializer.save()
                 return render(request, "success.html", {"data": serializer.data, "msg": "Task created successfully"}, status=status.HTTP_201_CREATED)
             return render(request, 'create_todo.html', {'errors': serializer.errors})
-        except Exception:
+        except Exception as e:
+            logger.error(f"Task not created: {request.user}: {str(e)}", exc_info=True)
             return render(request, "error.html", status=status.HTTP_404_NOT_FOUND)
 
 
@@ -80,6 +88,9 @@ class UpdateDeleteToDoApi(APIView):
     '''
         Works for Updation and Deletion of Tasks
     '''
+    authentication_classes = [BasicAuthentication] 
+    permission_classes = [IsAuthenticated] 
+    
     def put(self, request, pk=None):
         try:
             todo = Todo.objects.get(id=pk)
@@ -89,6 +100,7 @@ class UpdateDeleteToDoApi(APIView):
                 return Response({"todo": serializer.data, "msg": "Task Updated"}, status=status.HTTP_200_OK)
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         except Todo.DoesNotExist:
+            logger.error(f"Task not found, requested by {request.user}", exc_info=True)
             return Response({"error": "Todo not found"}, status=status.HTTP_404_NOT_FOUND)
     
     def delete(self, request, pk, format=None):
@@ -98,5 +110,6 @@ class UpdateDeleteToDoApi(APIView):
             todo.delete()
             return Response(status=status.HTTP_204_NO_CONTENT)
         except Todo.DoesNotExist:
+            logger.error(f"Task not found, requested by {request.user}", exc_info=True)
             return Response({"error": "Todo not found"}, status=status.HTTP_404_NOT_FOUND)
     

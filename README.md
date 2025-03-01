@@ -2,7 +2,7 @@
 TO-DO
 
 ## **DESCRIPTION**
-The Project APIs should allow users to create, update, delete and retrieve tasks. Each task can have a title, description, and status.
+The Project APIs should allow users to create, update, delete and retrieve tasks. Each task can have a title, description, due_date and status.
 
 
 ## **Installation**

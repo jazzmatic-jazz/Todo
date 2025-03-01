@@ -1,6 +1,7 @@
 *.pyc
 .env
 *__pycache__/
+logs
 
 api/migrations/*
 !/api/migrations/__init__.py

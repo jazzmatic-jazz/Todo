@@ -36,9 +36,19 @@ class User(AbstractBaseUser, PermissionsMixin):
 
 
 class Todo(models.Model):
+    '''
+        Todo task to create tasks
+            - user(fk)
+            - title (char)
+            - description (text)
+            - due_date (Datefield)
+            - status (char)
+            - created_at (datefield)
+    '''
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     title = models.CharField(max_length=100, null=False, blank=False)
     description = models.TextField(max_length=500, blank=True, null=True)
+    due_date = models.DateField()
     status = models.CharField(max_length=1, choices=STATUS, default="1")
     created_at = models.DateField(auto_now_add=True)
 

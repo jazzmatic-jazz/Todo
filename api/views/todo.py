@@ -9,7 +9,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.authentication import BasicAuthentication
 
 
-class TodoAPIList(APIView):
+class ListTodoAPI(APIView):
     '''
         GET Request:
             - Return a list of all tasks in the todo table.
@@ -50,9 +50,9 @@ class DetailTodoApi(APIView):
 
 
 
-class CreateToDo(APIView):
+class CreateToDoAPI(APIView):
     '''
-        POST: Create Task
+        POST: Create Task and store it in the todo table
         
     '''
     authentication_classes = [BasicAuthentication] 
@@ -76,7 +76,10 @@ class CreateToDo(APIView):
             return render(request, "error.html", status=status.HTTP_404_NOT_FOUND)
 
 
-class UpdateToDoApi(APIView):
+class UpdateDeleteToDoApi(APIView):
+    '''
+        Works for Updation and Deletion of Tasks
+    '''
     def put(self, request, pk=None):
         try:
             todo = Todo.objects.get(id=pk)

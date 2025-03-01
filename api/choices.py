@@ -1,5 +1,5 @@
 STATUS = (
-    ("1", "Todo"),
-    ("2", "pending"), 
-    ("3", "done"), 
+    ("1", "Pending"),
+    ("2", "In Progress"), 
+    ("3", "Completed"), 
 )

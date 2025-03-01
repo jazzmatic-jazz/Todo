@@ -34,11 +34,14 @@
                 <option value="3">Completed</option>
             </select>
         </div>
+        <div class="mb-3">
+            <label for="due_date" class="form-label">Due Date:</label>
+            <input type="date" id="duedate" name="due_date" class="form-control">
+        </div>
 
         <button type="submit" class="btn btn-primary">Create Task</button>
     </form>
 
-    <br>
-    <a href="{% url 'todo_list' %}" class="btn btn-secondary">View All Tasks</a>
+    
 </div>
 {% endblock content %}
